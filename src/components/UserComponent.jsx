@@ -30,7 +30,7 @@ class UserComponent extends Component {
                 <th>Mobile Number</th>
                 <th>Created By</th>
                 <th>Last Updated </th>
-                {/* <th>QR Code</th> */}
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>

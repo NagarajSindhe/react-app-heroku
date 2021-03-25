@@ -1,14 +1,17 @@
-import logo from "./logo.svg";
 import "./App.css";
 import UserComponent from "./components/UserComponent";
-import UserComponentWithFetch from "./components/UserComponentWithFetch";
+import HeaderComponent from "./components/HeaderComponent";
+import FooterComponent from "./components/FooterComponent";
+//import UserComponentWithFetch from "./components/UserComponentWithFetch";
 
 function App() {
   return (
-    <div className="App">
-      <UserComponent />
-      <hr></hr>
-      <UserComponentWithFetch />
+    <div>
+      <HeaderComponent />
+      <div className="container">
+        <UserComponent />
+      </div>
+      <FooterComponent />
     </div>
   );
 }
