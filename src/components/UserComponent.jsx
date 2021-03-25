@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UsersService from "../services/UsersService";
-import CreateUserComponent from "./CreateUserComponent";
+
 
 class UserComponent extends Component {
   constructor(props) {
@@ -16,6 +16,10 @@ class UserComponent extends Component {
   }
   createUser=()=>{
     this.props.history.push('/addUsers');
+  }
+  updateBtnHandler=(id)=>{
+    this.props.history.push(`/update-user/${id}`)
+
   }
   render() {
     console.log(this.state.users);
@@ -61,6 +65,9 @@ class UserComponent extends Component {
                           </p>)
                     })}
                     </td> */}
+                    <td>
+                      <button className="btn btn-info" onClick={(e)=>this.updateBtnHandler(user.id)}>Update</button>
+                    </td>
                   </tr>
                 );
               })}
