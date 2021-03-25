@@ -2,17 +2,25 @@ import "./App.css";
 import UserComponent from "./components/UserComponent";
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
-//import UserComponentWithFetch from "./components/UserComponentWithFetch";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import CreateUserComponent from "./components/CreateUserComponent";
 
 function App() {
   return (
     <div>
-      <HeaderComponent />
-      <div className="container">
-        <UserComponent />
-      </div>
-      <FooterComponent />
+      <Router>
+        <HeaderComponent />
+        <div className="container">
+          <Switch>
+            <Route path="/" exact component={UserComponent}></Route>
+            <Route path="/getUsersList" component={UserComponent}></Route>
+            <Route path="/addUsers" component={CreateUserComponent}></Route>
+          </Switch>
+        </div>
+        <FooterComponent />
+      </Router>
     </div>
+    // <UserComponent />
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import UsersService from "../services/UsersService";
+import CreateUserComponent from "./CreateUserComponent";
 
 class UserComponent extends Component {
   constructor(props) {
@@ -13,12 +14,18 @@ class UserComponent extends Component {
       this.setState({ users: response.data });
     });
   }
+  createUser=()=>{
+    this.props.history.push('/addUsers');
+  }
   render() {
     console.log(this.state.users);
     return (
       <div>
         <div>
           <h1 className="text-center">Users List With Axios</h1>
+          <div className="row">
+          <button className="btn btn-primary" onClick={this.createUser}>Create User</button>
+          </div>
           <table className="table table-striped">
             <thead>
               <tr>
