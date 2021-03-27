@@ -4,6 +4,7 @@ class CreateUserComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: props.match.params.id,
       fname: "",
       mName: "",
       lname: "",
@@ -11,35 +12,62 @@ class CreateUserComponent extends Component {
       mobileNo: "",
     };
   }
-  createUser = (e) => {
+  componentDidMount = () => {
+    //To get data from api and load into each text box while update
+    if(this.state.id === '-1'){
+      return;
+    }else{
+    UsersService.getUserById(this.state.id).then((res) => {
+      let users = res.data;
+      this.setState({
+        fname: users.fname,
+        mName: users.mName,
+        lname: users.lname,
+        adharNo: users.adharNo,
+        mobileNo: users.mobileNo,
+      });
+      console.log(JSON.stringify(users));
+    });
+  }
+  };
+  getTitle = () => {
+    return this.state.id === "-1" ? "Create user" : "Update user";
+  };
+  createOrupdateUser = (e) => {
     e.preventDefault();
     let user = {
-        fname: this.state.fname,
+      fname: this.state.fname,
       mName: this.state.mName,
       lname: this.state.lname,
       adharNo: this.state.adharNo,
       mobileNo: this.state.mobileNo,
     };
     console.log(user);
-    UsersService.addUsers(user).then((res) => {
-      this.props.history.push("/getUsersList");
-    });
-    //alert("create" + e.target.value);
+    if (this.state.id !== "-1") {
+      UsersService.updateUsers(this.state.id, user).then((res) => {
+        this.props.history.push("/getUsersList/home");
+      });
+    } else {
+      UsersService.addUsers(user).then((res) => {
+        this.props.history.push("/getUsersList/home");
+      });
+    }
   };
   cancelCreateUser = () => {
-    this.props.history.push("/getUsersList");
+    this.props.history.push("/getUsersList/home");
   };
   render() {
     return (
       <div>
+        <br></br>
         <div className="container">
           <div className="row">
             <div className="card col-md-6 offset-md-3 offset-md-3">
-              <h3 className="text-center">Create User</h3>
+              <h3 className="text-center">{this.getTitle()}</h3>
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <label>First Name</label>
+                    <label>First Name:</label>
                     <input
                       name="fname"
                       className="form-control"
@@ -50,7 +78,7 @@ class CreateUserComponent extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Middle Name</label>
+                    <label>Middle Name:</label>
                     <input
                       name="mName"
                       className="form-control"
@@ -61,7 +89,7 @@ class CreateUserComponent extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Last Name</label>
+                    <label>Last Name:</label>
                     <input
                       name="lname"
                       className="form-control"
@@ -72,7 +100,7 @@ class CreateUserComponent extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Adhar No</label>
+                    <label>Adhar No:</label>
                     <input
                       name="adharNo"
                       className="form-control"
@@ -83,7 +111,7 @@ class CreateUserComponent extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Mobile</label>
+                    <label>Mobile:</label>
                     <input
                       name="mobileNo"
                       className="form-control"
@@ -93,11 +121,14 @@ class CreateUserComponent extends Component {
                       }}
                     />
                   </div>
-                  <button className="btn btn-success" onClick={this.createUser}>
-                    Create
+                  <button
+                    className="btn btn-sm btn-success"
+                    onClick={this.createOrupdateUser}
+                  >
+                    {this.getTitle()}
                   </button>
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-sm btn-danger"
                     style={{ marginLeft: "10px" }}
                     onClick={this.cancelCreateUser}
                   >

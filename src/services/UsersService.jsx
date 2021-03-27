@@ -4,6 +4,7 @@ const GET_ALL_USERS = "http://localhost:8080/getAllUsers";
 const ADD_USERS = "http://localhost:8080/generateQR";
 const GET_USER_BY_ID = "http://localhost:8080/getById";
 const UPDATE_USERS = `http://localhost:8080/updateUser`;
+const DELETE_USERS = "http://localhost:8080/delete/user";
 
 class UsersService {
   getUsers() {
@@ -19,6 +20,9 @@ class UsersService {
 
   updateUsers(userId, users) {
     return axios.put(UPDATE_USERS + "/" + userId, users);
+  }
+  deleteUsers(userId) {
+    return axios.delete(DELETE_USERS + "/" + userId);
   }
 }
 
